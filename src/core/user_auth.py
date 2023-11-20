@@ -31,7 +31,7 @@ async def create_jwt_token_for_user_auth(
         refresh_token=refresh_token,
         expires_in_sec=user_auth.expires_in_sec,
         refresh_expires_in=APP_CONFIG.jwt_config.refresh_token_expires_in,
-        user_id=user_auth.user_id
+        user_id=user_auth.user_id,
     )
 
 

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-
+from src.core.counter import initiate_counter, commit_counter
 from src.api.router import base_router
 from src.db.connection import close_connection, connect_and_init_db
 
@@ -9,7 +9,10 @@ app = FastAPI(
 )
 # App LifeCycle
 app.add_event_handler("startup", connect_and_init_db)
+app.add_event_handler("startup", initiate_counter)
+
 app.add_event_handler("shutdown", close_connection)
+app.add_event_handler("shutdown", commit_counter)
 
 # Middlewares
 # 1.CORS

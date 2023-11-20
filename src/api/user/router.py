@@ -32,8 +32,10 @@ async def user_login(
     )
     user_jwt_token = await create_jwt_token_for_user_auth(user_auth=user_auth)
     return schema.UserProfile(
-        auth_token=user_jwt_token, username=user.username, email=user.email,
-        user_id=user.id
+        auth_token=user_jwt_token,
+        username=user.username,
+        email=user.email,
+        user_id=user.id,
     )
 
 

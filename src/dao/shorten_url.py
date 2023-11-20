@@ -20,12 +20,12 @@ async def create_shortern_url(
         "user_id": ObjectId(user_id),  # Convert user_id string to ObjectId
         "max_retrieval": max_retrieval,
         "expires_at": expires_at,
+        "is_active": True,
     }
-    print(user_url_dict)
     result = await db_client.get_collection(UserUrl.collection_name).insert_one(
         user_url_dict
     )
-    user_url_dict['user_id'] = str(user_url_dict['user_id'])
+    user_url_dict["user_id"] = str(user_url_dict["user_id"])
     return UserUrl(**user_url_dict, id=str(result.inserted_id))
 
 
@@ -33,7 +33,7 @@ async def get_shortern_url_by_index(
     db_client: AsyncIOMotorDatabase, short_url_index: str
 ) -> Optional[UserUrl]:
     url_data = await db_client.get_collection(UserUrl.collection_name).find_one(
-        {"short_url_index": short_url_index}
+        {"short_url_index": short_url_index, "is_active": True}
     )
     if url_data:
         url_data["id"] = str(url_data.pop("_id"))

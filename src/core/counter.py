@@ -19,17 +19,16 @@ class Counter:
     async def initiate(self):
         async with self._lock:
             range_response = await get_counter_range()
-            self.__starts_from = range_response['starts_from']
-            self.__end_to = range_response['ends_at']
+            self.__starts_from = range_response["starts_from"]
+            self.__end_to = range_response["ends_at"]
             self.__current_position = self.__starts_from
-            self.__ref_id = range_response['ref_id']
-            print("counter initialized at", self.__starts_from, 'to', self.__end_to)
+            self.__ref_id = range_response["ref_id"]
+            print("counter initialized at", self.__starts_from, "to", self.__end_to)
 
     async def commit(self):
         async with self._lock:
             await update_counter(
-                ref_id=self.__ref_id,
-                last_commits_at=self.current_position
+                ref_id=self.__ref_id, last_commits_at=self.current_position
             )
 
     async def get_next(self) -> int:

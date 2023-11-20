@@ -12,6 +12,7 @@ class UserUrl(BaseDBModel):
     max_retrieval: int = -1  # -1 means infinite
     expires_at: datetime
     is_active: bool = True
+    usage_count: int = 0
 
     @field_validator("max_retrieval")
     @classmethod

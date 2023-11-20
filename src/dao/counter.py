@@ -36,12 +36,14 @@ async def get_counter_range():
             },
             session=session,
         )
-        return {"starts_from": starts_from, "ends_at": ends_at, "ref_id": str(last_counter_range.pop('_id'))}
+        return {
+            "starts_from": starts_from,
+            "ends_at": ends_at,
+            "ref_id": str(last_counter_range.pop("_id")),
+        }
 
 
-async def update_counter(
-        ref_id: str, last_commits_at: int
-):
+async def update_counter(ref_id: str, last_commits_at: int):
     mongo_client = await DB.get_client()
     db_client = getattr(mongo_client, APP_CONFIG.mongo_config.base_database)
 

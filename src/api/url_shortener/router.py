@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks, Header
 from starlette.responses import RedirectResponse
 
 from src import schema
+from src.api.common.logger import log_request_data
 from src.core.counter import Counter
 from src.dao.shorten_url import (
     create_shortern_url,
@@ -26,10 +27,10 @@ def clean_url(url):
 
 @router.post("/generate", response_model=schema.ShortURLResponse)
 async def generate_short_url(
-    db_client=Depends(get_db_client),
-    auth=Depends(get_auth_token_payload),
-    *,
-    url_input: schema.URLRequestInput,
+        db_client=Depends(get_db_client),
+        auth=Depends(get_auth_token_payload),
+        *,
+        url_input: schema.URLRequestInput,
 ):
     cleaned_url = clean_url(url_input.url)
     counter_number = await Counter().get_next()
@@ -57,11 +58,12 @@ redirection_router = APIRouter()
 
 @redirection_router.get("/{short_url_index}", response_model=schema.ShortURLResponse)
 async def get_short_url(
-    background_tasks: BackgroundTasks,
-    db_client=Depends(get_db_client),
-    *,
-    short_url_index: str,
-    user_agent: str = Header("server"),
+        background_tasks: BackgroundTasks,
+        db_client=Depends(get_db_client),
+        *,
+        short_url_index: str,
+        user_agent: str = Header("server"),
+        log_data=Depends(log_request_data)
 ):
     shortern_url_obj = await get_and_increment_shorten_url(db_client, short_url_index)
 

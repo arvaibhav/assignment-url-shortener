@@ -6,15 +6,18 @@ WORKDIR /usr/src/app
 # Copy the current directory contents into the container at /usr/src/app
 COPY . .
 
-# Install any needed packages specified in requirements.txt
+# Create and activate a virtual environment
 RUN python -m venv venv
-RUN . venv/bin/activate && pip install --no-cache-dir -r requirements.txt
+ENV PATH="/home/myuser/venv/bin:$PATH"
+
+# Install packages in the virtual environment
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Set the PYTHONPATH environment variable
 ENV PYTHONPATH /usr/src/app
 
 # Make port 80 available to the world outside this container
-EXPOSE 80
+EXPOSE 8000
 
-# Run main.py when the container launches
-CMD ["./venv/bin/python", "src/main.py"]
+# Run migration scripts and then start the Uvicorn server
+CMD . venv/bin/activate && python scripts/mongo_models_migrations.py && uvicorn src.main:app --host 0.0.0.0 --port 8000 --workers 8

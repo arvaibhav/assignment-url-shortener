@@ -19,6 +19,6 @@ async def get_user_by_username(
         {"username": username}
     )
     if user_data:
-        user_data['id'] = str(user_data.pop('_id'))
+        user_data["id"] = str(user_data.pop("_id"))
         return User(**user_data)
     return None

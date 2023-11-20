@@ -12,6 +12,7 @@ class RefreshTokenPayload(BaseModel):
 
 
 class UserJWTAuthToken(BaseModel):
+    user_id:str
     token_type: str = "bearer"
     access_token: str
     refresh_token: str

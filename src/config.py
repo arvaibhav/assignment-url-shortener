@@ -31,6 +31,7 @@ class _MongoConfig(BaseSettings):
 class _BaseConfig(BaseSettings):
     jwt_config: _JWTConfig = _JWTConfig()
     mongo_config: _MongoConfig = _MongoConfig()
+    domain: str = "sample.com"
 
     class Config:
         env_file = ENV_FILE

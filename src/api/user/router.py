@@ -13,9 +13,13 @@ router = APIRouter()
 
 @router.post("/login", response_model=schema.UserProfile)
 async def user_login(
-    db_client=Depends(get_db_client), *, user_login_request: schema.UserAuthRequestSchema
+    db_client=Depends(get_db_client),
+    *,
+    user_login_request: schema.UserAuthRequestSchema,
 ):
-    user = await get_user_by_username(db_client=db_client, username=user_login_request.username)
+    user = await get_user_by_username(
+        db_client=db_client, username=user_login_request.username
+    )
     if not user:
         raise HTTPException(status_code=401, detail="username not found")
     if not verify_hashed_string(user_login_request.password, user.password_hash):
@@ -28,15 +32,20 @@ async def user_login(
     )
     user_jwt_token = await create_jwt_token_for_user_auth(user_auth=user_auth)
     return schema.UserProfile(
-        auth_token=user_jwt_token, username=user.username, email=user.email
+        auth_token=user_jwt_token, username=user.username, email=user.email,
+        user_id=user.id
     )
 
 
 @router.post("/signup", response_model=schema.UserJWTAuthToken)
 async def user_signup(
-    db_client=Depends(get_db_client), *, user_signup_request: schema.UserSignupRequestSchema
+    db_client=Depends(get_db_client),
+    *,
+    user_signup_request: schema.UserSignupRequestSchema,
 ):
-    if await get_user_by_username(db_client=db_client, username=user_signup_request.username):
+    if await get_user_by_username(
+        db_client=db_client, username=user_signup_request.username
+    ):
         raise HTTPException(
             status_code=401, detail="account with this username already created"
         )

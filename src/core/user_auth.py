@@ -5,7 +5,7 @@ from src.utils.jwt_auth import create_jwt_token, fetch_jwt_token
 
 
 async def create_jwt_token_for_user_auth(
-        user_auth: UserAuth
+    user_auth: UserAuth
 ) -> schema.UserJWTAuthToken:
     access_token_payload = schema.AccessTokenPayload(user_id=user_auth.user_id)
     token_id = user_auth.token_id
@@ -31,6 +31,7 @@ async def create_jwt_token_for_user_auth(
         refresh_token=refresh_token,
         expires_in_sec=user_auth.expires_in_sec,
         refresh_expires_in=APP_CONFIG.jwt_config.refresh_token_expires_in,
+        user_id=user_auth.user_id
     )
 
 

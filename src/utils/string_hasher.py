@@ -39,6 +39,6 @@ def number_to_base62(num, max_length=5):
     return result
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     base62 = number_to_base62(158, max_length=5)
     print(base62)

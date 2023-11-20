@@ -20,12 +20,10 @@ async def get_user_auth_by_id(
     db_client: AsyncIOMotorDatabase, _id: str
 ) -> Optional[UserAuth]:
     obj_id = ObjectId(_id)  # Convert string to ObjectId
-    user_auth_data = await db_client.get_collection(
-        UserAuth.collection_name
-    ).find_one(
+    user_auth_data = await db_client.get_collection(UserAuth.collection_name).find_one(
         {"_id": obj_id}
     )
     if user_auth_data:
-        user_auth_data['id'] = str(user_auth_data.pop('_id'))
+        user_auth_data["id"] = str(user_auth_data.pop("_id"))
         return UserAuth(**user_auth_data)
     return None

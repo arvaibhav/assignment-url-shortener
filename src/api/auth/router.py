@@ -10,7 +10,7 @@ router = APIRouter()
 @router.post("/token/refresh", response_model=UserJWTAuthToken)
 async def validate_refresh_token(
         db_client=Depends(get_db_client), *,
-        refresh_token=Body(...)
+        refresh_token=Body(..., embed=True)
 ):
     # Validate the refresh token
     try:

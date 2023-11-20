@@ -35,4 +35,5 @@
 
 - Short Url format
     - `domain/{unique_id}`
-        - unique_id : is Base62 encoding ( 26 A-Z, 26 a-z, and 0-9 ) 7 digits i.e 62 ** 7
+        - unique_id : is combination of Base52 (only first digit) + Base62 encoding ( 26 A-Z, 26 a-z, and 0-9 ) 
+        - 7 digits i.e 52 * 62 ** 6 possible indexes .

@@ -12,6 +12,7 @@
 - **JWT (JSON Web Tokens):**
     - For secure user authentication: to ensures that only authenticated users can access certain API endpoints.
 
+
 ## Basic Flow
 
 1. **User Registration and Authentication:**

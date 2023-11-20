@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM python:3.9-slim
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
@@ -8,9 +8,9 @@ COPY . .
 
 # Create and activate a virtual environment
 RUN python -m venv venv
-ENV PATH="/home/myuser/venv/bin:$PATH"
 
 # Install packages in the virtual environment
+RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Set the PYTHONPATH environment variable

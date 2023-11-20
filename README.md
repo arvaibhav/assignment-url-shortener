@@ -37,3 +37,24 @@
     - `domain/{unique_id}`
         - unique_id : is combination of Base52 (only first digit) + Base62 encoding ( 26 A-Z, 26 a-z, and 0-9 ) 
         - 7 digits i.e 52 * 62 ** 6 possible indexes .
+
+- Counter Mechanism for Unique and Ordered Base62 IDs
+    1. **Counter Implementation:**
+        - To achieve uniqueness, a counter mechanism is employed within the application.
+        - The counter ensures that each generated ID is unique and ordered.
+        - When a new short URL is requested, the counter provides the next available unique ID within its assigned range.
+    2. **Reason for Range:**
+        - Multi-server instances of the application can work concurrently without generating duplicate IDs.
+        - Reduce the query cost to known last committed number.
+    3. **Counter Initialization:**
+        - At **application startup, the counter is initialized with its unique range.
+        - For instance, a range of IDs from 10000 to 19999 might be assigned.
+     4. **Data Models for Counter:**
+        - In MongoDB, two data models are used to manage the counter mechanism:
+            - **`LastCounterRange` Model:**
+                - Stores the last number used in the counter.
+                - Ensures that each counter range is unique.
+            - **`AppCounterReference` Model:**
+                - Represents the counter reference for each range.
+                - Tracks the starting point, ending point, and last committed position within a range.
+                - Is active or inactive based on usage.

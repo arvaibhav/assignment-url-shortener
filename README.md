@@ -58,3 +58,67 @@
                 - Represents the counter reference for each range.
                 - Tracks the starting point, ending point, and last committed position within a range.
                 - Is active or inactive based on usage.
+
+
+## Project Structure
+
+```
+.
+├── .env.development                # Environment-specific configurations (dev env p.o.v)
+├── Dockerfile                      # Instructions to build the Docker image
+├── docker-compose.yaml             # Defines multi-container Docker applications
+├── requirements.txt                # Python App dependencies
+├── run_docker.sh                   # Script to run Docker-related commands (setup env)
+├── scripts
+│   └── mongo_models_migrations.py  # MongoDB models migration scripts (auto migrate the models which are defined at src/db/models
+└── src
+    ├── api                         # API route definitions and logic
+    │   ├── __init__.py
+    │   ├── auth                    # Authentication-related routes
+    │   │   ├── __init__.py
+    │   │   └── router.py
+    │   ├── common                  # Common functionalities (middlewares, logger, dependecies)
+    │   │   ├── __init__.py
+    │   │   ├── authentication.py
+    │   │   ├── logger.py
+    │   │   └── middlewares.py
+    │   ├── router.py
+    │   ├── url_shortener           # URL shortener specific routes
+    │   │   ├── __init__.py
+    │   │   └── router.py
+    │   └── user                    # User management routes
+    │       ├── __init__.py
+    │       └── router.py
+    ├── config.py                   # Configuration settings for the app
+    ├── core                        # Core business logic and functionalities
+    │   ├── __init__.py
+    │   ├── counter.py
+    │   └── user_auth.py
+    ├── dao                         # Data Access Objects for database interactions
+    │   ├── __init__.py
+    │   ├── auth.py
+    │   ├── counter.py
+    │   ├── shorten_url.py
+    │   └── user.py
+    ├── db                          # Database models and connection setup
+    │   ├── __init__.py
+    │   ├── connection.py
+    │   └── models
+    │       ├── __init__.py
+    │       ├── auth.py
+    │       ├── base.py
+    │       ├── counter.py
+    │       ├── shorten_url.py
+    │       └── user.py
+    ├── main.py                     # Main entry point for the application
+    ├── schema                      # Pydantic schemas for request and response validation
+    │   ├── __init__.py
+    │   ├── auth.py
+    │   ├── url_shortner.py
+    │   └── user.py
+    └── utils                       # Utility functions and helpers
+        ├── __init__.py
+        ├── jwt_auth.py
+        └── string_hasher.py
+```
+

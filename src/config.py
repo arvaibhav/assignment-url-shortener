@@ -50,3 +50,4 @@ class _SingletonConfig:
 
 
 APP_CONFIG: _BaseConfig = _SingletonConfig().instance
+print(APP_CONFIG.mongo_config.url, ".,.,.,")

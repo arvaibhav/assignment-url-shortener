@@ -11,8 +11,10 @@ services:
       - "27017:27017"
     volumes:
       - ./mongo-data:/data/db
+    networks:
+      - node-network
 
-  pythonapp:
+  backendapp:
     build: .
     ports:
       - "8000:8000"
@@ -21,5 +23,12 @@ services:
     environment:
       MONGO_DB_USERNAME: ${MONGO_DB_USERNAME}
       MONGO_DB_PASSWORD: ${MONGO_DB_PASSWORD}
+      MONGO_DB_URL: "mongodb://mongodb:27017"
       MONGO_DB_BASE_DATABASE: ${MONGO_DB_BASE_DATABASE}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
+    networks:
+      - node-network
+
+networks:
+  node-network:
+    driver: bridge
